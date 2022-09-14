@@ -18,13 +18,13 @@ Kita tetap bisa membuat aplikasi web berbasis Django tanpa menggunakan *virtual 
 
 ## **Implementasi**
 ### <u>Poin 1</u>
-Pada file `katalog/views.py` dibuat sebuah function bernama `show_catalog(request)` yang menerima parameter berupa `request`. Function `katalog/views.py` mengambil seluruh data dari class `CatalogItem` yang berada di `katalog/models.py`. Kemudian, di dalam function `katalog/views.py` dibuat sebuah `context` yang berisi `catalog_item`, `nama`, dan `npm`. Pada akhirnya, function `katalog/views.py` akan me-*render* file `katalog.html`, `context`, dan parameter `request`.
+Pada file `katalog/views.py` dibuat sebuah function bernama `show_catalog(request)` yang menerima parameter berupa `request`. Function `katalog/views.py` mengambil seluruh data dari class `CatalogItem` yang berada di `katalog/models.py`. Kemudian, di dalam function `katalog/views.py` dibuat sebuah `context` yang berisi `catalog_item`, `nama`, dan `npm`. Pada akhirnya, function `katalog/views.py` akan me-*render* file `katalog/katalog.html`, `context`, dan parameter `request`.
 
 ### <u>Poin 2</u>
 Pada file `katalog/urls.py` ditambahkan urlpatterns `path('', show_catalog, name='show_catalog')` untuk menampilkan `show_catalog(request)`, tetapi untuk benar-benar tampil pada web, urlpatterns pada `katalog/urls.py` perlu dihubungkan dengan urlpatterns pada `project_django/urls.py`. Oleh karena itu, pada `project_django/urls.py` ditambahkan `path('katalog/', include('katalog.urls'))` untuk mengalihkan *route* `/katalog/` dan memanggil function `show_catalog(request)`
 
 ### <u>Poin 3</u>
-Pemetaan data pada file `katalog.html` dilakukan dengan menambahkan `{{nama}}` dan `{{npm}}` untuk menampilkan data nama dan npm. Selain itu, ditambahkan looping `catalog_item` untuk menampilkan isi dari `catalog_item` pada tabel. 
+Pemetaan data pada file `katalog/katalog.html` dilakukan dengan menambahkan `{{nama}}` dan `{{npm}}` untuk menampilkan data nama dan npm. Selain itu, ditambahkan looping `catalog_item` untuk menampilkan isi dari `catalog_item` pada tabel. 
 
 ### <u>Poin 4</u>
 Pertama buat sebuah app pada Heroku, kemudian tambahkan secrets pada repository github berupa `HEROKU_APP_NAME` dan `HEROKU_APP_KEY` yang berisi nama dari aplikasi kita dan API key yang dapat diakses pada `Account Settings` di Heroku.
