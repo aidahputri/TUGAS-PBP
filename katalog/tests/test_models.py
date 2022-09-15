@@ -14,4 +14,4 @@ class TestModels(TestCase):
 
   def test_catalog_models(self):
     ipad = CatalogItem.objects.get(item_name = "ipad")
-    self.assertEquals(ipad, "ipad")
+    self.assertEquals(ipad.item_name, "ipad")

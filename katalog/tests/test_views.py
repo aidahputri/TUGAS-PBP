@@ -8,5 +8,5 @@ class TestViews(TestCase):
     response = client.get(reverse("katalog:show_catalog"))
 
     self.assertEquals(response.status_code, 200)
-    self.assertTemplateUsed(response, "katalog/katalog.html")
+    self.assertTemplateUsed(response, "katalog.html")
 
