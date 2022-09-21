@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+ {% block content %}
+
+  <h1>Assignment 3 PBP</h1>
+
+  <h5>Name: </h5>
+  <p>{{name}}</p>
+
+  <h5>Student ID: </h5>
+  <p>{{npm}}</p>
+
+  {% if watched >= not_watched %}
+  <p>Selamat, kamu sudah banyak menonton!</p>
+  {% else %}
+  <p>Wah, kamu masih sedikit menonton!</p>
+  {% endif %}
+
+  <table>
+    <tr>
+      <th>Watched</th>
+      <th>Title</th>
+      <th>Rating</th>
+      <th>Release Date</th>
+      <th>Review</th>
+    </tr>
+    {% comment %} Add the data below this line {% endcomment %}
+    {% for film in watchlist %}
+    <tr>
+        <td>{{film.watched}}</td>
+        <td>{{film.title}}</td>
+        <td>{{film.rating}}</td>
+        <td>{{film.release_date}}</td>
+        <td>{{film.review}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+ {% endblock content %}

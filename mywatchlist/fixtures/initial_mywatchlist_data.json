@@ -1,0 +1,112 @@
+[
+  {
+    "model": "mywatchlist.mywatchlist",
+    "pk": 1,
+    "fields": {
+      "watched": true,
+      "title": "Jerapah itu Serangga",
+      "rating": "5",
+      "release_date": "2014-01-01",
+      "review": "Wow"
+    }
+  },
+  {
+    "model": "mywatchlist.mywatchlist",
+    "pk": 2,
+    "fields": {
+      "watched": true,
+      "title": "Manusia itu Dinosaurus",
+      "rating": "3",
+      "release_date": "2000-05-05",
+      "review": "Keren"
+    }
+  },
+  {
+    "model": "mywatchlist.mywatchlist",
+    "pk": 3,
+    "fields": {
+      "watched": true,
+      "title": "Rumput yang Bergoyang",
+      "rating": "4",
+      "release_date": "2018-06-06",
+      "review": "Lumayan"
+    }
+  },
+  {
+    "model": "mywatchlist.mywatchlist",
+    "pk": 4,
+    "fields": {
+      "watched": true,
+      "title": "7 Keajaiban Depok",
+      "rating": "5",
+      "release_date": "2019-03-03",
+      "review": "Perfect"
+    }
+  },
+  {
+    "model": "mywatchlist.mywatchlist",
+    "pk": 5,
+    "fields": {
+      "watched": true,
+      "title": "Menjinakan Bom dengan Tatapan Maut",
+      "rating": "1",
+      "release_date": "2020-06-06",
+      "review": "Nice"
+    }
+  },
+  {
+    "model": "mywatchlist.mywatchlist",
+    "pk": 6,
+    "fields": {
+      "watched": false,
+      "title": "Kakakku ternyata Anak dari Ayahku",
+      "rating": "5",
+      "release_date": "2010-04-04",
+      "review": "Keren"
+    }
+  },
+  {
+    "model": "mywatchlist.mywatchlist",
+    "pk": 7,
+    "fields": {
+      "watched": false,
+      "title": "Rembulan Tenggelam di Wajahmu",
+      "rating": "5",
+      "release_date": "2010-07-07",
+      "review": "Wow"
+    }
+  },
+  {
+    "model": "mywatchlist.mywatchlist",
+    "pk": 8,
+    "fields": {
+      "watched": false,
+      "title": "Captain Asep",
+      "rating": "3",
+      "release_date": "2010-01-01",
+      "review": "Bagus"
+    }
+  },
+  {
+    "model": "mywatchlist.mywatchlist",
+    "pk": 9,
+    "fields": {
+      "watched": false,
+      "title": "Aku, Kamu, Dia",
+      "rating": "5",
+      "release_date": "2019-09-09",
+      "review": "Perfect"
+    }
+  },
+  {
+    "model": "mywatchlist.mywatchlist",
+    "pk": 10,
+    "fields": {
+      "watched": true,
+      "title": "Langit Tak Seindah Parasmu",
+      "rating": "5",
+      "release_date": "2020-01-01",
+      "review": "Wow"
+    }
+  }
+]
