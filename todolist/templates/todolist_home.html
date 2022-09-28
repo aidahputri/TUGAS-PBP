@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Assignment 4 PBP</h1>
-
-<h3>User: </h3>
-<p>{{username}}</p>
+<h1>Hello, {{username}}!</h1>
 
 {% comment %} table {% endcomment %}
 <table border='2'>
@@ -43,6 +40,8 @@
     </tr>
   {% endfor %}
 </table>
+
+<br>
 
 {% comment %} button {% endcomment %}
 <button>
