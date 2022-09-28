@@ -52,7 +52,7 @@ def logout_user(request):
   logout(request)
   response = HttpResponseRedirect(reverse('todolist:login'))
   response.delete_cookie('last_login')
-  return 
+  return response
 
 # create task
 @login_required(login_url='/todolist/login/')
