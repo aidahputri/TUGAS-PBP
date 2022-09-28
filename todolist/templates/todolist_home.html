@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Assignment 4 PBP</h1>
+
+<h3>User: </h3>
+<p>{{username}}</p>
+
+{% comment %} table {% endcomment %}
+<table border='2'>
+  <tr>
+    <th>Date</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th>Change Task Status</th>
+    <th>Delete Task</th>
+  </tr>
+  
+  {% for task in tasks %}
+    <tr>
+      <td>{{task.date}}</td>
+      <td>{{task.title}}</td>
+      <td>{{task.description}}</td>
+
+      {% if task.is_finished %}
+        <td>Finished</td>
+      {% else %}
+        <td>Not Finished</td>
+      {% endif %}
+
+      <td>
+        <button>
+          <a href="{% url 'todolist:change_status' task.id %}">Change status</a>
+        </button>
+      </td>
+
+      <td>
+        <button>
+          <a href="{% url 'todolist:delete' task.id %}">Delete</a>
+        </button>
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+
+{% comment %} button {% endcomment %}
+<button>
+  <a href="{% url 'todolist:create_task' %}">Add new task</a>
+</button>
+<br>
+<button>
+  <a href="{% url 'todolist:logout' %}">Logout</a>
+</button>
+
+{% endblock content %}
