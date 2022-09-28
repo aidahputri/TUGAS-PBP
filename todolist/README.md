@@ -1,10 +1,10 @@
-# **Tugas 3 (mywatchlist)**
+# **Tugas 3 (todolist)**
 
 -- [Deployment Link](https://assignment-2-aidahnovallia.herokuapp.com/) --
 
 ## **Apa kegunaan `{% csrf_token %}` pada elemen `<form>`? Apa yang terjadi apabila tidak ada potongan kode tersebut pada elemen `<form>`?**
 ---
-CSFR(Cross Site Request Forgery) yang juga dikenal sebagai “Session Riding” atau “One-Click Attack” merupakan jenis serangan berbahaya terhadap penggunaan aplikasi web. Salah satu metode terbaik untuk menghindari CSFR adalah dengan menggunakan token (CSFR token) yang sering berubah alih-alih bergantung pada *session cookies* untuk menjalankan perubahan status pada server. Tanpa `{% csrf_token %}`, form yang dibuat tetap bisa berjalan dengan baik, tetapi situs web lain yang tak terpercaya bisa saja mengakses web kita dan mengisi form tersebut.
+CSFR(Cross Site Request Forgery) yang juga dikenal sebagai “Session Riding” atau “One-Click Attack” merupakan jenis serangan berbahaya terhadap penggunaan aplikasi web. Salah satu metode terbaik untuk menghindari CSFR adalah dengan menggunakan token (CSFR token) yang sering berubah alih-alih bergantung pada *session cookies* untuk menjalankan perubahan status pada server. Tanpa `{% csrf_token %}`, input akan gagal diverifikasi sehinggal menyebabkan error setelah meng-*submit* form.
 
 <br>
 
