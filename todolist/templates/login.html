@@ -5,41 +5,46 @@
 {% endblock meta %}
 
 {% block content %}
+    <div class="p-0 md:flex w-full font-poppins rounded-lg border h-screen items-center justify-center">
+        <div class="login flex flex-col w-full md:w-[110%] gap-6 h-screen min-h-screen p-6 items-center justify-center md:bg-pink-5 bg-pink-6 md:bg-opacity-50 bg-opacity-70">
+            <p class="text-4xl font-extrabold text-pink-1">Login</p>
+            <form class="space-y-3" method="POST" action="">
+                {% csrf_token %}
+                <div class="flex flex-col gap-2">
+                    <div class="flex gap-4">
+                    <div class="flex flex-col text-lg text-purple-3 font-extrabold justify-around gap-6">
+                        <p>Username</p>
+                        <p>Password</p>
+                    </div>
+                    <div class="flex flex-col justify-around gap-6">
+                        <input type="text" name="username" class="form-control bg-opacity-50 rounded-lg py-2 px-4"></td>
+                        <input type="password" name="password" class="form-control rounded-lg py-2 px-4">
+                    </div>
+                    </div>
+                    {% if messages %}
+                        <ul class="font-bold text-xs text-center text-pink-1 mt-2 mb-2">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <div class="flex items-center w-full md:hidden text-center mt-8">
+                        <p class="text-sm w-full mt-2 text-center text-purple-3">Don't have an account? <span class="text-pink-1"><a href="{% url 'todolist:register' %}" class="underline">Register</a><span></p>
+                    </div>
+                    <button class="w-full">
+                        <input class="text-purple-1 mt-2 w-auto bg-gradient-to-r hover:bg-gradient-to-l from-pink-4 to-blue-1 font-extrabold rounded-full text-md md:px-7 md:py-2 px-8 py-3 text-center mr-2 mb-2" type="submit" name="submit" value="Login">
+                    </button>
+                </div>
+            </form>
+        </div>
 
-<div class = "login">
-
-    <h1>Login</h1>
-
-    <form method="POST" action="">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>Username: </td>
-                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
-            </tr>
-                    
-            <tr>
-                <td>Password: </td>
-                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
-            </tr>
-
-            <tr>
-                <td></td>
-                <td><input class="btn login_btn" type="submit" value="Login"></td>
-            </tr>
-        </table>
-    </form>
-
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
-        
-    Don't have account yet? <a href="{% url 'todolist:register' %}">Create Account</a>
-
-</div>
+        <div class="hidden text-center gap-y-4 md:flex flex-col w-full h-full justify-center p-6 bg-gradient-to-r from-pink-4 to-blue-1">
+            <p class="text-3xl lg:text-4xl font-extrabold text-purple-3">Hello Friend!</p>
+            <p class="text-sm md:text-md 2xl:text-lg font-extrabold text-pink-1">Enter your personal details and start journey with us</p>
+            <div class="flex item-center justify-center mt-6">
+                <button type="button" class="text-white bg-gradient-to-r hover:bg-gradient-to-l from-purple-3 to-pink-1 font-extrabold rounded-full text-sm px-7 py-2.5 text-center mr-2 mb-2"><a href="{% url 'todolist:register' %}">Sign up</a></button>
+            </div>
+        </div>
+    </div>
 
 {% endblock content %}

@@ -1,55 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Hello, {{username}}!</h1>
+{% comment %} <h1>Hello, {{username}}!</h1> {% endcomment %}
 
 {% comment %} table {% endcomment %}
-<table border='2'>
-  <tr>
-    <th>Date</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Status</th>
-    <th>Change Task Status</th>
-    <th>Delete Task</th>
-  </tr>
+<div class="bg-todolist h-screen bg-cover overflow-y-auto bg-no-repeat w-full">
+  {% include 'navbar.html' %}
   
-  {% for task in tasks %}
-    <tr>
-      <td>{{task.date}}</td>
-      <td>{{task.title}}</td>
-      <td>{{task.description}}</td>
-
-      {% if task.is_finished %}
-        <td>Finished</td>
-      {% else %}
-        <td>Not Finished</td>
-      {% endif %}
-
-      <td>
-        <button>
-          <a href="{% url 'todolist:change_status' task.id %}">Change status</a>
-        </button>
-      </td>
-
-      <td>
-        <button>
-          <a href="{% url 'todolist:delete' task.id %}">Delete</a>
-        </button>
-      </td>
-    </tr>
-  {% endfor %}
-</table>
+  <div class="grid grid-cols lg:flex lg:flex-wrap h-full items-center w-full justify-center gap-4 font-poppins mt-8 pl-4 pr-4">
+    {% for task in tasks %}
+      {% include 'card_task.html' with task=task only %}
+    {% endfor %}
+  </div>
+</div>
 
 <br>
-
-{% comment %} button {% endcomment %}
-<button>
-  <a href="{% url 'todolist:create_task' %}">Add new task</a>
-</button>
-<br>
-<button>
-  <a href="{% url 'todolist:logout' %}">Logout</a>
-</button>
 
 {% endblock content %}

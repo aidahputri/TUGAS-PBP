@@ -4,31 +4,60 @@
 <title>Account Registration</title>
 {% endblock meta %}
 
+{% load filters %}
+
 {% block content %}  
 
-<div class = "login">
-    
-    <h1>Registration Form</h1>  
+    <div class="p-0 md:flex w-full font-poppins rounded-lg border h-screen items-center justify-center">
+        <div class="hidden text-center gap-y-4 md:flex flex-col w-full h-full justify-center p-6 bg-gradient-to-r from-pink-5 to-green-1">
+            <p class="text-3xl lg:text-4xl font-extrabold text-purple-3">Welcome back!</p>
+            <p class="text-sm md:text-md 2xl:text-lg font-extrabold text-pink-1">To keep connected with us please login with your personal info</p>
+            <div class="flex item-center justify-center mt-6">
+                <button type="button" class="text-white bg-gradient-to-r hover:bg-gradient-to-l from-purple-3 to-pink-1 font-extrabold rounded-full text-sm px-7 py-2.5 text-center mr-2 mb-2"><a href="{% url 'todolist:login' %}">Login</a></button>
+            </div>
+        </div>
 
-        <form method="POST" >  
-            {% csrf_token %}  
-            <table>  
-                {{ form.as_table }}  
-                <tr>  
-                    <td></td>
-                    <td><input type="submit" name="submit" value="Daftar"/></td>  
-                </tr>  
-            </table>  
-        </form>
+        <div class="login flex flex-col w-full md:w-[110%] gap-6 h-screen min-h-screen p-6 items-center justify-center md:bg-yellow-1 bg-pink-6 md:bg-opacity-50 bg-opacity-70">
+            <p class="text-4xl font-extrabold text-pink-1">Register</p>
+            <form class="space-y-3" method="POST">
+                {% csrf_token %}
+                <div class="flex flex-col gap-2">
+                  <div class="flex gap-4">
+                    <div class="flex flex-col text-md text-purple-3 font-extrabold justify-around gap-6">
+                      <p>Username</p>
+                      <p>Password</p>
+                      <p>Confirm password</p>
+                    </div>
+                    <div class="flex flex-col justify-around gap-6">
+                        {{ form.username|addclass:"rounded-lg py-2 px-4"}}
+                        {{ form.password1|addclass:"rounded-lg py-2 px-4"}}
+                        {{ form.password2|addclass:"rounded-lg py-2 px-4"}}
+                    </div>
+                  </div>
+                  <div clas="flex items-center justify-center gap-2 w-full">
+                    <div class="font-poppins text-xs text-center font-bold text-pink-1 mt-2 mb-10">
+                        {{ form.username.errors }}
+                        {{ form.password1.errors }}
+                        {{ form.password2.errors }}
+                    </div>
+                    {% if messages %}
+                        <ul class="font-bold text-xs text-center text-pink-1 mt-2 mb-10">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <div class="flex w-full items-center md:hidden text-center">
+                        <p class="text-sm text-center w-full mt-2 text-purple-3">Already have an account? <span class="text-pink-1"><a href="{% url 'todolist:login' %}" class="underline">Login</a><span></p>
+                    </div>
+                    <button class="w-full">
+                        <input class="text-purple-1 mt-2 w-auto bg-gradient-to-r hover:bg-gradient-to-l from-pink-4 to-blue-1 font-extrabold rounded-full text-md md:px-7 md:py-2 px-8 py-3 text-center mr-2 mb-2" type="submit" name="submit" value="Sign up">
+                    </button>
+                  </div>
+                </div>
+            </form>
+        </div>
 
-    {% if messages %}  
-        <ul>   
-            {% for message in messages %}  
-                <li>{{ message }}</li>  
-                {% endfor %}  
-        </ul>   
-    {% endif %}
-
-</div>  
+    </div>
 
 {% endblock content %}
