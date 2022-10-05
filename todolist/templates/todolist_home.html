@@ -4,13 +4,15 @@
 {% comment %} <h1>Hello, {{username}}!</h1> {% endcomment %}
 
 {% comment %} table {% endcomment %}
-<div class="bg-todolist h-screen bg-cover overflow-y-auto bg-no-repeat w-full">
-  {% include 'navbar.html' %}
-  
-  <div class="grid grid-cols lg:flex lg:flex-wrap h-full items-center w-full justify-center gap-4 font-poppins mt-8 pl-4 pr-4">
-    {% for task in tasks %}
-      {% include 'card_task.html' with task=task only %}
-    {% endfor %}
+<div class="h-screen">
+  <div class="bg-todolist h-full bg-cover overflow-y-auto gap-y-10 bg-no-repeat w-full">
+    {% include 'navbar.html' %}
+    
+    <div class="grid grid-cols my-20 lg:flex lg:flex-wrap h-full items-center w-full justify-center gap-4 font-poppins pl-4 pr-4">
+      {% for task in tasks %}
+        {% include 'card_task.html' with task=task only %}
+      {% endfor %}
+    </div>
   </div>
 </div>
 
