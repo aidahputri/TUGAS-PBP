@@ -29,3 +29,6 @@ Salah satu atribut dalam HTML yang dapat digunakan sebagai selector adalah atrib
 Biasanya, saat memilih elemen dengan id tertentu, maka ditulis dengan karakter hash (#), kemudian diikuti dengan id elemen.
 
 ## **Implementasi checklist**
+- Pada tugas ini, saya membuat kustomisasi templat HTML dengan library Tailwind. Saya menambahkan link CDN Tailwind pada `base.html` dan menginisialisasi `tailwind.config.js` dengan Tailwind CLI.
+- Pada `login.html` dan `register.html` saya menggunakan flex untuk membagi halaman menjadi dua bagian. Sementara, pada `create_task.html` dan `todolist_home.html` saya menggunakan card dan menambahkan navbar
+- Menambahkan responsive style dengan memanfaatkan breakpoints yang telah disediakan oleh Tailwind.
