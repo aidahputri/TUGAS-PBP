@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+/* @layer base {
   @font-face {
     font-family: Ponzu;
     src: url('./static/Font/Ponzu/Ponzu Complete Family/Mint Type - Ponzu-Regular.otf') format('otf');
   }
-}
+} */
