@@ -1172,13 +1172,6 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* @layer base {
-  @font-face {
-    font-family: Ponzu;
-    src: url('./static/Font/Ponzu/Ponzu Complete Family/Mint Type - Ponzu-Regular.otf') format('otf');
-  }
-} */
-
 .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));

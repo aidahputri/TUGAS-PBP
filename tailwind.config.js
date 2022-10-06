@@ -9,7 +9,6 @@ module.exports = {
     extend: {
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
-        ponzu: ['Ponzu']
       },
       colors: {
         'purple-1': '#553EAE',
