@@ -3,8 +3,11 @@ from django.urls import reverse
 from todolist.models import Task
 from todolist.forms import FormTask
 from django.contrib import messages
+from django.core import serializers
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -16,6 +19,7 @@ def show_todolist(request):
   context = {
       'username': request.user.username,
       'tasks': tasks,
+      'form': FormTask()
   }
   return render(request, "todolist_home.html", context)
 
@@ -54,6 +58,25 @@ def logout_user(request):
   response.delete_cookie('last_login')
   return response
 
+# add task
+@login_required(login_url='/todolist/login/')
+def add_task(request):
+  if request.method == "POST":
+    task_form = FormTask(request.POST)
+    if task_form.is_valid():
+      judul = task_form.cleaned_data["title"]
+      deskripsi = task_form.cleaned_data["description"]
+      tasks = Task.objects.create(user=request.user, title=judul, description=deskripsi, date=datetime.date.today())
+      data = {
+        "pk": tasks.pk,
+        "title": tasks.title,
+        "description": tasks.description,
+        "date": tasks.date,
+        "is_finished": tasks.is_finished
+      }
+      return JsonResponse(data)
+  return HttpResponseBadRequest()
+
 # create task
 @login_required(login_url='/todolist/login/')
 def create_task(request):
@@ -70,10 +93,11 @@ def create_task(request):
 
 # delete
 @login_required(login_url='/todolist/login/')
+@csrf_exempt
 def delete(request, id):
   task = Task.objects.get(id=id)
   task.delete()
-  return redirect('todolist:show_todolist')
+  return HttpResponse()
 
 #change status
 @login_required(login_url='/todolist/login/')
@@ -82,3 +106,9 @@ def change_status(request, id):
   task.is_finished = not (task.is_finished)
   task.save()
   return redirect('todolist:show_todolist')
+
+# show todolist JSON
+@login_required(login_url='/todolist/login/')
+def show_todolist_json(request):
+  tasks = Task.objects.filter(user=request.user)
+  return HttpResponse(serializers.serialize("json", tasks), content_type="application/json")

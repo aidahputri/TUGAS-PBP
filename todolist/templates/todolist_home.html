@@ -1,21 +1,151 @@
 {% extends 'base.html' %}
 
-{% block content %}
-{% comment %} <h1>Hello, {{username}}!</h1> {% endcomment %}
-
-{% comment %} table {% endcomment %}
-<div class="h-screen">
-  <div class="bg-todolist h-full bg-cover overflow-y-auto gap-y-10 bg-no-repeat w-full">
-    {% include 'navbar.html' %}
-    
-    <div class="grid grid-cols my-20 lg:flex lg:flex-wrap h-full items-center w-full justify-center gap-4 font-poppins pl-4 pr-4">
-      {% for task in tasks %}
-        {% include 'card_task.html' with task=task only %}
-      {% endfor %}
+{% block meta %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  const card = function(tasks) {return`
+    <div class="p-6 lg:w-[20vw] shadow hover:shadow-xl hover:shadow-stone-500 w-[80vw] min-w-lg h-[40vh] bg-gradient-to-r from-purple-1 to-purple-5 rounded-lg shadow-md" id="task-${tasks.pk}">
+      <div class="w-full h-full">
+        <div class="flex items-center justify-between">
+          <p class="truncate overflow-hidden text-2xl font-semibold tracking-tight text-white">${tasks.title}</p>
+          <div class="flex gap-x-1">
+            ${tasks.is_finished? 
+              `<svg class="w-6 h-6" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>`:
+              `<svg class="w-6 h-6" fill="white" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`
+            }
+              <button onClick="taskDelete(${tasks.pk})">
+                <svg class="w-6 h-6" fill="red" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+              </a>
+          </div>
+        </div>
+        <p class="mb-3 font-normal text-xs text-white">${tasks.date}</p>
+        <div class="max-w-[75vw] max-h-[12vh] overflow-y-auto lg:max-w-[15vw] text-clip">
+          <p class="mb-3 text-clip break-words font-normal text-pink-5">${tasks.description}</p>
+        </div>
+        <div class="flex h-[50%] items-center ">
+          <button type="button" class="bottom-0 text-purple-1 bg-gradient-to-r from-pink-5 to-pink-5 font-bold rounded-full text-sm px-5 py-2.5 text-center mr-3 md:mr-0">
+            <a href="/todolist/change-status/${tasks.pk}">Change status</a>
+          </button>
+        </div>
+      </div>
     </div>
+  `}
+  
+  const modalOpen = function() { $(".modal").removeClass("hidden") }
+
+  const modalClose = function() { $(".modal").addClass("hidden") }
+
+  const taskShow = function() {
+    $.get("/todolist/json/", function(data) {
+      for(var i = 0; i < data.length; i++){
+        var tasks = {
+          pk : data[i].pk,
+          ...data[i].fields
+        };
+        console.log(card(tasks));
+
+        $(".task-cards").append(card(tasks));
+      }
+    }
+  )
+  };
+
+  const taskPost = function(tasks) {
+    $.post("/todolist/add/", {
+      ...tasks,
+      csrfmiddlewaretoken: "{{ csrf_token }}"
+    },
+
+    function(data, status) {
+      $(".task-cards").append(card(data));
+      modalClose();
+    });
+  }
+
+  const taskDelete = function(pk) {
+    $.ajax({
+      url: `/todolist/delete/${pk}`,
+      type: "DELETE",
+      success: function(data) { $(`#task-${pk}`).remove(); }
+    });
+  }
+
+  $(document).ready(
+    function() {
+      taskShow();
+      
+      $(".modal-open").click(function() { modalOpen(); });
+
+      $(".modal-close").click(function() { modalClose(); });
+
+      $(".submit-task").click(function() {
+        const tasks = {
+          title: $(".inp-title").val(),
+          description: $(".inp-description").val()
+        }
+    
+        taskPost(tasks);
+        return false;
+      });
+    }
+  )
+</script>
+{% endblock meta %}
+
+{% load filters %}
+
+{% block content %}
+<div class="bg-todolist h-screen bg-cover overflow-y-auto gap-y-10 bg-no-repeat w-full">
+  {% include 'navbar.html' %}
+  
+  <div class="task-cards grid grid-cols my-20 lg:flex lg:flex-wrap h-full w-full justify-center gap-4 font-poppins pl-4 pr-4">
   </div>
 </div>
 
-<br>
+<div class="modal bg-black/80 hidden absolute top-0 p-0 w-full overflow-hidden font-poppins border h-screen items-center justify-center">
+  <div class="flex flex-col justify-center bg-purple-1 h-full">
+    <div class="flex justify-center">
+      <div class = "flex flex-col bg-gradient-to-r from-purple-3 to-pink-1 rounded-lg p-8 gap-4 hover:shadow-2xl hover:shadow-grey-800 drop-shadow-xl">    
+          <div class="flex justify-between items-center">
+            <h1 class="text-xl text-white font-bold">Add new task</h1>
+            <button class="modal-close">
+              <svg class="w-7 h-7" fill="white" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
 
+          <div class="border-b-2 border-pink-6 my-2"></div>
+      
+              <form method="POST" >
+                  {% csrf_token %}
+                  <div class="flex flex-col gap-4">
+                    <div class="flex gap-4">
+                      <div class="flex flex-col text-white font-semibold justify-around gap-4">
+                        <p>Title</p>
+                        <p>Description</p>
+                      </div>
+                      <div class="flex flex-col justify-around gap-4">
+                        {{ form.title|addclass:"inp-title rounded-lg py-2 px-4"}}
+                        {{ form.description|addclass:"inp-description rounded-lg py-2 px-4"}}
+                      </div>
+                    </div>
+                    <div class="font-poppins text-xs text-center font-bold text-pink-1 mt-2 mb-10">
+                      {{ form.title.errors }}
+                      {{ form.description.errors }}
+                    </div>
+                    <button class="submit-task w-full">
+                      <input class="text-purple-1 mt-2 w-auto bg-gradient-to-r hover:bg-gradient-to-l from-pink-4 to-blue-1 font-extrabold rounded-full text-md md:px-7 md:py-2 px-8 py-3 text-center mr-2 mb-2" type="submit" name="submit" value="Add task">
+                    </button>
+                  </div>
+              </form>
+      
+          {% if messages %}  
+              <ul>   
+                  {% for message in messages %}  
+                      <li>{{ message }}</li>  
+                      {% endfor %}  
+              </ul>   
+          {% endif %}
+      </div>  
+  </div>
+</div>
 {% endblock content %}
